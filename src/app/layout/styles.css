@@ -1,0 +1,28 @@
+.mainImage img { width: 100%; height: auto; }
+
+.main-section { height: 100%; padding: 20px 20px 20px 20px; white-space: nowrap; cursor: grab; }
+.tamg-title { margin: 0 !important; font-weight: initial !important; }
+
+
+.anecdote { width: 100%; height: calc(100vh - 167px); overflow-y: auto; display: inline-block !important; vertical-align: top; margin: 0 0 0 20px !important; white-space: normal; position: relative; border-radius: .28571429rem; box-shadow: 0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5;}
+.anecdote .labels { position: absolute; top: 20px; left: 20px; z-index: 9;}
+.anecdote .labelPush { height: 90px; background-color: #eeeeee; }
+.anecdote .labels .label { display: block; margin-bottom: 0 !important; border-radius: 0 !important; width: fit-content; text-transform: uppercase;}
+.anecdote-nav { padding-top: 0; }
+
+.flexcontainer { display: flex; flex-direction: column; height: 100%; margin: 0; }
+
+.ui.card>.content { border-top: none; }
+.ui.card>.extra.content { background: #363430; margin-top: auto; color: white; padding-bottom: 1em; }
+.bandLabel, .personLabel { margin-top: 2px !important; hyphens: none; }
+
+.ui.menu { border-radius: 0; }
+.ui.card { width: 100%; min-height: 100%; }
+.ui.label { vertical-align: middle !important;}
+i.chevron.down.icon { padding-left: 5px; padding-top: 1px;}
+#rw_1_input { vertical-align: middle; }
+.rw-widget-picker .rw-select { display: none; }
+
+@media screen and (min-width: 480px){
+	.anecdote { width: 440px !important; }
+}

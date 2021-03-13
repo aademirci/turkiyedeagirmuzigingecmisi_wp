@@ -1,13 +1,19 @@
+import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
+import 'semantic-ui-css/semantic.min.css'
+import './app/layout/styles.css';
+
+export const history = createBrowserHistory()
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Router>
     <App />
-  </React.StrictMode>,
+  </Router>
+  ,
   document.getElementById('root')
 );
 
