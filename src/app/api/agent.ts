@@ -5,9 +5,11 @@ import { IMedia } from "../models/media";
 axios.defaults.baseURL = "https://tamg.aademirci.com/wp-json/wp/v2/"
 
 const responseBody = (response: AxiosResponse) => response.data
+const responseHeader = (response: AxiosResponse) => response.headers
 
 const requests = {
-    get: (url: string) => axios.get(url).then(responseBody)
+    get: (url: string) => axios.get(url).then(responseBody),
+    getHeaders: (url: string) => axios.get(url).then(responseHeader)
 }
 
 const Anecdotes = {
@@ -18,5 +20,10 @@ const Anecdotes = {
     getYears: (): Promise<IYears[]> => requests.get('/olay/archives')
 }
 
+const AnecdotesHeaders = {
+    list: () => requests.getHeaders('/olay'),
+    listByYear: (year: number) => requests.getHeaders(`/olay?&before=${year}-12-31T23:59:59&after=${year}-01-01T00:00:00&order=asc`)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { Anecdotes }
+export default { Anecdotes, AnecdotesHeaders }

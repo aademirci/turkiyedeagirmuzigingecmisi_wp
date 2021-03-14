@@ -16,17 +16,20 @@ const AnecdoteDashboard: React.FC = () => {
     const [year, setYear] = useState(0)
     const [yearly, setYearly] = useState(false)
     const [array, setArray] = useState<IAnecdote[]>([])
+    const [position, setPosition] = useState(0)
 
     useEffect(() => {
         document.title = 'Anekdotlar'
-        if (yearly === false) {
-            loadAnecdotes(page).then(() => {
-                setArray([...array, ...anecdoteArray])
+        if ((yearly === false)) {
+            loadAnecdotes(page).then(result => {
+                if (page <= result) 
+                    setArray([...array, ...anecdoteArray])
                 setLoaded(true)
             })
-        } else {
+        } else if (yearly === true) {
             loadAnecdotesByYear(page, year).then(result => {
-                setArray([...array, ...result!])
+                if (page <= result?.maxPages) 
+                    setArray([...array, ...result?.anecdoteArray!])
                 setLoaded(true)
             })
         }
@@ -38,6 +41,17 @@ const AnecdoteDashboard: React.FC = () => {
         setYearly(b)
         setPage(1)
     }
+
+    const infiniteScroll = () => {
+        const anecdoteWidth = document.getElementById(anecdoteArray[0].slug)?.offsetWidth! + 20
+        let screenSize = window.innerWidth - 40
+        let windowWidth = anecdoteWidth * anecdoteArray.length * page
+        let containerPosition = document.getElementsByClassName('main-section')[0].scrollLeft
+
+        setPosition(containerPosition)
+        if (position + screenSize >= windowWidth - screenSize) 
+            setPage(page + 1)
+    }
     
     if (loadingInitial) return <LoadingComponent content='Anekdotlar yükleniyor...' />
 
@@ -47,7 +61,7 @@ const AnecdoteDashboard: React.FC = () => {
                 loaded && <div>
                 <AnecdoteNav callback={callback} setYear={setYear} />
                 <Button onClick={() => {setPage(page + 1);}} />
-                <ScrollContainer className='main-section scroll-container'>
+                <ScrollContainer className='main-section scroll-container' onEndScroll={infiniteScroll}>
                     <AnecdoteList array={array} />
                 </ScrollContainer>
                 </div>
