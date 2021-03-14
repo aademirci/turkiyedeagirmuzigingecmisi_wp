@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import ScrollContainer from 'react-indiana-drag-scroll'
-import { Button } from 'semantic-ui-react'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
 import { IAnecdote } from '../../../app/models/anecdote'
 import { RootStoreContext } from '../../../app/stores/rootStore'
@@ -52,6 +51,10 @@ const AnecdoteDashboard: React.FC = () => {
         if (position + screenSize >= windowWidth - screenSize) 
             setPage(page + 1)
     }
+
+    function scrollTo(){
+        document.getElementsByClassName('main-section')[0].scrollTo({left: 0, behavior: 'smooth'});
+    }
     
     if (loadingInitial) return <LoadingComponent content='Anekdotlar yükleniyor...' />
 
@@ -59,8 +62,7 @@ const AnecdoteDashboard: React.FC = () => {
         <Fragment>
             {
                 loaded && <div>
-                <AnecdoteNav callback={callback} setYear={setYear} />
-                <Button onClick={() => {setPage(page + 1);}} />
+                <AnecdoteNav callback={callback} setYear={setYear} scrollTo={scrollTo} />
                 <ScrollContainer className='main-section scroll-container' onEndScroll={infiniteScroll}>
                     <AnecdoteList array={array} />
                 </ScrollContainer>

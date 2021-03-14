@@ -5,10 +5,11 @@ import { RootStoreContext } from '../../app/stores/rootStore'
 
 interface IProps {
     callback: Function,
-    setYear: Function
+    setYear: Function,
+    scrollTo: Function
 }
 
-const AnecdoteNav: React.FC<IProps> = ({callback, setYear}) => {
+const AnecdoteNav: React.FC<IProps> = ({callback, setYear, scrollTo}) => {
     const rootStore = useContext(RootStoreContext)
     const {getYears} = rootStore.anecdoteStore
     const [text, setText] = useState<string | undefined>("Yillarr")
@@ -42,7 +43,7 @@ const AnecdoteNav: React.FC<IProps> = ({callback, setYear}) => {
     return (
         <Container className='anecdote-nav' textAlign='center'>
             <Button.Group widths={3}>
-                <Button><Icon name='chevron left' />En başa dön</Button>
+                <Button onClick={() => scrollTo()}><Icon name='chevron left' />En başa dön</Button>
                 <Dropdown button className='icon' floating scrolling options={[{key: 'notSelected', text: 'Seciniz', value: 1}, ...yearOptions]} onChange={handleChange} icon='chevron down' text={text} style={{'textAlign': 'center'}} />
                 <Button toggle>Sıralama: Geçmişten bugüne</Button>
             </Button.Group>
