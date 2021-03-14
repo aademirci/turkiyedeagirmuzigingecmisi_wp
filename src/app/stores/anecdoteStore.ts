@@ -31,10 +31,10 @@ export default class AnecdoteStore {
         }
     }
 
-    @action loadAnecdotes = async () => {
+    @action loadAnecdotes = async (page: number) => {
         this.loadingInitial = true
         try {
-            const anecdotes = await agent.Anecdotes.list()
+            const anecdotes = await agent.Anecdotes.list(page)
             runInAction(() => {
                 anecdotes.forEach((anecdote, i) => {
                     this.anecdoteArray[i] = anecdote
@@ -42,14 +42,14 @@ export default class AnecdoteStore {
                 this.loadingInitial = false
             })
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
 
-    @action loadAnecdotesByYear = async (year: number) => {
+    @action loadAnecdotesByYear = async (page:number, year: number) => {
         this.loadingInitial = true
         try {
-            const anecdotes = await agent.Anecdotes.listByYear(year)
+            const anecdotes = await agent.Anecdotes.listByYear(page, year)
             runInAction(() => {
                 this.anecdoteArray = []
                 anecdotes.forEach((anecdote, i) => {
@@ -73,32 +73,14 @@ export default class AnecdoteStore {
         }
     }
 
-    @action getFeaturedImage = async (id: number) => {
+    @action getAttached = async (id: number) => {
         this.loadingInitial = true
         try {
-            const media = await agent.Media.selected(id)
+            const attachedMedia = await agent.Anecdotes.getAttached(id)
             runInAction(() => {
-                this.media = media
-                this.loadingInitial = false
+                this.attachedMedia = attachedMedia.reverse()
             })
-            return media
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    @action getAttachedImages = async (id: number) => {
-        this.loadingInitial = true
-        try {
-            const attachedMedia = await agent.Anecdotes.getMedia(id)
-            runInAction(() => {
-                this.attachedMedia = []
-                attachedMedia.forEach((media, i) => {
-                    this.attachedMedia[i] = media
-                })
-                this.loadingInitial = false
-            })
-            return this.attachedMedia
+            this.loadingInitial = false
         } catch (error) {
             console.log(error)
         }

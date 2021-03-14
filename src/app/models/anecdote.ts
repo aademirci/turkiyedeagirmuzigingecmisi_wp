@@ -1,3 +1,5 @@
+import { IBand, ICity, IMedium, IPerson, IType } from "./taxonomy";
+
 export interface IAnecdote {
     id: number
     date: string
@@ -5,11 +7,11 @@ export interface IAnecdote {
     title: ITitle
     content: IContent
     featured_media: number
-    'olay-tipleri': Array<number>
-    gruplar: Array<number>
-    kisiler: Array<number>
-    ortamlar: Array<number>
-    sehirler: Array<number>
+    'olay-tipleri': IType[]
+    gruplar: IBand[]
+    kisiler: IPerson[]
+    ortamlar: IMedium[]
+    sehirler: ICity[]
 }
 
 export interface ITitle {

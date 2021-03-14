@@ -3,18 +3,28 @@ import { Container, Button, Icon, Dropdown, DropdownProps } from 'semantic-ui-re
 import { IYears } from '../../app/models/anecdote'
 import { RootStoreContext } from '../../app/stores/rootStore'
 
-const AnecdoteNav: React.FC<{callback:Function}> = ({callback}) => {
+interface IProps {
+    callback: Function,
+    setYear: Function
+}
+
+const AnecdoteNav: React.FC<IProps> = ({callback, setYear}) => {
     const rootStore = useContext(RootStoreContext)
-    const {loadAnecdotesByYear, getYears} = rootStore.anecdoteStore
+    const {getYears} = rootStore.anecdoteStore
     const [text, setText] = useState<string | undefined>("Yillarr")
     const [years, setYears] = useState<IYears[] | undefined>([])
 
     const handleChange = (e:SyntheticEvent<HTMLElement, Event>, data:DropdownProps) => {
+        if (data.value?.toString() === '1') {
+            callback(false)
+            return
+        }
         const value = data.value?.toString()
         const year = parseInt(value!)
         const text = data.key
         setText(text)
-        loadAnecdotesByYear(year).then((result) => callback(result))
+        callback(true)
+        setYear(year)
     }
 
     let yearOptions: {key: string, text: string, value: string}[] = []
@@ -33,7 +43,7 @@ const AnecdoteNav: React.FC<{callback:Function}> = ({callback}) => {
         <Container className='anecdote-nav' textAlign='center'>
             <Button.Group widths={3}>
                 <Button><Icon name='chevron left' />En başa dön</Button>
-                <Dropdown button className='icon' floating scrolling options={yearOptions} onChange={handleChange} icon='chevron down' text={text} style={{'textAlign': 'center'}} />
+                <Dropdown button className='icon' floating scrolling options={[{key: 'notSelected', text: 'Seciniz', value: 1}, ...yearOptions]} onChange={handleChange} icon='chevron down' text={text} style={{'textAlign': 'center'}} />
                 <Button toggle>Sıralama: Geçmişten bugüne</Button>
             </Button.Group>
         </Container>

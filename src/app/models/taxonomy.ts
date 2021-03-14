@@ -1,24 +1,24 @@
 export interface IType {
-    id: number
+    term_id: number
     name: string
 }
 
 export interface IBand {
-    id: number
+    term_id: number
     name: string
 }
 
 export interface IPerson {
-    id: number
+    term_id: number
     name: string
 }
 
 export interface IMedium {
-    id: number
+    term_id: number
     name: string
 }
 
 export interface ICity {
-    id: number
+    term_id: number
     name: string
 }

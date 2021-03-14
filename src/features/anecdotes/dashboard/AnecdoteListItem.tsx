@@ -5,72 +5,65 @@ import { Link } from 'react-router-dom'
 import { Card, Label, Icon } from 'semantic-ui-react'
 import { IAnecdote } from '../../../app/models/anecdote'
 import parse from "html-react-parser"
-import BandsList from '../taxonomy/BandsList'
-import PeopleList from '../taxonomy/PeopleList'
-import MediaList from '../taxonomy/MediaList'
-import CitiesList from '../taxonomy/CitiesList'
-import OlayTypesList from '../taxonomy/OlayTypesList'
 import FeaturedImage from '../FeaturedImage'
 import { RootStoreContext } from '../../../app/stores/rootStore'
 import { observer } from 'mobx-react-lite'
 import ThumbImages from '../ThumbImages'
-import axios from 'axios'
+import LoadingComponent from '../../../app/layout/LoadingComponent'
 
 const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
     const rootStore = useContext(RootStoreContext)
-    const {getAttachedImages, attachedMedia} = rootStore.anecdoteStore
+    const {getAttached, attachedMedia, loadingInitial} = rootStore.anecdoteStore
     const [loaded, setLoaded] = useState(false)
-    
-    useEffect(() => {
-        const CancelToken = axios.CancelToken
-        const source = CancelToken.source()
-        getAttachedImages(anecdote.id).then(() => {setLoaded(true)})
 
-        return () => {
-            source.cancel()
-        }
-    }, [getAttachedImages, anecdote.id, setLoaded])
-    
-    
+    useEffect(() => {
+        getAttached(anecdote.id).then(() => setLoaded(true))
+    }, [getAttached, anecdote.id])
+
+    if (loadingInitial) return <LoadingComponent content='Anekdotlar yükleniyor...' />
     return (
-        <div className="anecdote">
+        
+        <div className="anecdote" id={anecdote.slug}>
             <Card>
                     <div className="mainImage">
-                        {anecdote.featured_media ? <FeaturedImage imageId={anecdote.featured_media} /> : <div className="labelPush"></div> }
+                        {loaded && anecdote.featured_media ? attachedMedia.map(mid => {
+                            if (mid.id === anecdote.featured_media){
+                                return <FeaturedImage key={mid.id} image={mid} />
+                            } else {
+                                return <Fragment key={mid.id}></Fragment>
+                            }
+                        }) : <div className="labelPush"></div>}
                         <Label.Group>
-                            {loaded &&
+                            
                             <Label color='black'>
-                                {anecdote['olay-tipleri'].map((typeId, index) => {
-                                return (
-                                        <Fragment key={typeId}>
+                                {anecdote['olay-tipleri'].map((type, index) => {
+                                    return (
+                                        <Fragment key={type.term_id}>
                                             {(index ? ', ' : '')}
-                                            <OlayTypesList key={typeId} typeId={typeId} />
+                                            {type.name}
                                         </Fragment>
                                     )
                                 })}
                             </Label>
-                            }
+                            
                             <Label color='black'>{format(new Date(anecdote.date), 'd MMMM yyyy', {locale: tr})}</Label>
                         </Label.Group>
                     </div>
                     
                     <Card.Content>
-                        <Card.Header as={Link} to={`/olay/${anecdote.slug}`}>{anecdote.title.rendered}</Card.Header>
+                        <Card.Header as={Link} to={`/olay/${anecdote.slug}`}>{parse(anecdote.title.rendered)}</Card.Header>
                         <Card.Meta>
-                            <span className='date'><Icon name='map marker alternate' />
-                                {anecdote.ortamlar.map(mediaId => (
-                                    <MediaList key={mediaId} mediaId={mediaId} />
-                                ))}
-                                {anecdote.sehirler.map(cityId => (
-                                    <CitiesList key={cityId} cityId={cityId} />
-                                ))}
+                            <span className='date'>{anecdote.ortamlar && <Icon name='map marker alternate' />}
+                                {anecdote.ortamlar && 
+                                anecdote.ortamlar[0].name}
+                                {anecdote.sehirler && `, ${anecdote.sehirler[0].name}`}
                             </span>
                         </Card.Meta>
                         <Card.Description>
                             {parse(anecdote.content.rendered)}
                         </Card.Description>
-                        {loaded && (<Card.Group itemsPerRow={3}>
-                            {attachedMedia.map(mid => {
+                        <Card.Group itemsPerRow={3}>
+                            {loaded && attachedMedia.map(mid => {
                                 if (mid.id !== anecdote.featured_media)
                                     return (
                                         <ThumbImages key={mid.id} attachedMedia={mid} />
@@ -78,21 +71,20 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                                 else
                                     return (<Fragment key={mid.id} />)
                             })} 
-                        </Card.Group>)}
+                        </Card.Group>
                     </Card.Content>
                     
-                    {loaded &&
+                    
                     <Card.Content extra>
                         Oradaydilar:
                         <br />
-                        {anecdote.gruplar.map(bandId => (
-                            <BandsList key={bandId} bandId={bandId} />
+                        {anecdote.gruplar && anecdote.gruplar.map(band => (
+                            <Label key={band.term_id} color="orange" className="bandLabel">{band.name}</Label>
                         ))}
-                        {anecdote.kisiler.map(personId => (
-                            <PeopleList key={personId} personId={personId} />
+                        {anecdote.kisiler && anecdote.kisiler.map(person => (
+                            <Label key={person.term_id} color="grey" className="personLabel">{person.name}</Label>
                         ))}
                     </Card.Content>
-                    }
             </Card>
 
             
