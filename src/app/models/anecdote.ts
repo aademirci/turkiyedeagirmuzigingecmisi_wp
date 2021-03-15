@@ -7,11 +7,11 @@ export interface IAnecdote {
     title: ITitle
     content: IContent
     featured_media: number
-    'olay-tipleri': IType[]
-    gruplar: IBand[]
-    kisiler: IPerson[]
-    ortamlar: IMedium[]
-    sehirler: ICity[]
+    'olaydaki_olay-tipleri': IType[]
+    olaydaki_gruplar: IBand[]
+    olaydaki_kisiler: IPerson[]
+    olaydaki_ortamlar: IMedium[]
+    olaydaki_sehirler: ICity[]
 }
 
 export interface ITitle {

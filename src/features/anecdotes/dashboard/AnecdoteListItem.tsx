@@ -36,7 +36,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                         <Label.Group>
                             
                             <Label color='black'>
-                                {anecdote['olay-tipleri'].map((type, index) => {
+                                {anecdote['olaydaki_olay-tipleri'].map((type, index) => {
                                     return (
                                         <Fragment key={type.term_id}>
                                             {(index ? ', ' : '')}
@@ -53,10 +53,10 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                     <Card.Content>
                         <Card.Header as={Link} to={`/olay/${anecdote.slug}`}>{parse(anecdote.title.rendered)}</Card.Header>
                         <Card.Meta>
-                            <span className='date'>{anecdote.ortamlar && <Icon name='map marker alternate' />}
-                                {anecdote.ortamlar && 
-                                anecdote.ortamlar[0].name}
-                                {anecdote.sehirler && `, ${anecdote.sehirler[0].name}`}
+                            <span className='date'>{anecdote.olaydaki_ortamlar && <Icon name='map marker alternate' />}
+                                {anecdote.olaydaki_ortamlar && 
+                                anecdote.olaydaki_ortamlar[0].name}
+                                {anecdote.olaydaki_sehirler && `, ${anecdote.olaydaki_sehirler[0].name}`}
                             </span>
                         </Card.Meta>
                         <Card.Description>
@@ -78,10 +78,10 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                     <Card.Content extra>
                         Oradaydilar:
                         <br />
-                        {anecdote.gruplar && anecdote.gruplar.map(band => (
+                        {anecdote.olaydaki_gruplar && anecdote.olaydaki_gruplar.map(band => (
                             <Label key={band.term_id} color="orange" className="bandLabel">{band.name}</Label>
                         ))}
-                        {anecdote.kisiler && anecdote.kisiler.map(person => (
+                        {anecdote.olaydaki_kisiler && anecdote.olaydaki_kisiler.map(person => (
                             <Label key={person.term_id} color="grey" className="personLabel">{person.name}</Label>
                         ))}
                     </Card.Content>
