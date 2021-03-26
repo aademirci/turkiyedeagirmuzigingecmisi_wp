@@ -28,7 +28,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                     <div className="mainImage">
                         {loaded && anecdote.featured_media ? attachedMedia.map(mid => {
                             if (mid.id === anecdote.featured_media){
-                                return <FeaturedImage key={mid.id} image={mid} />
+                                return <FeaturedImage key={mid.id} image={mid} gallery={attachedMedia} />
                             } else {
                                 return <Fragment key={mid.id}></Fragment>
                             }
@@ -66,7 +66,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                             {loaded && attachedMedia.map(mid => {
                                 if (mid.id !== anecdote.featured_media)
                                     return (
-                                        <ThumbImages key={mid.id} attachedMedia={mid} />
+                                        <ThumbImages key={mid.id} attachedMedia={mid} gallery={attachedMedia} />
                                     )
                                 else
                                     return (<Fragment key={mid.id} />)

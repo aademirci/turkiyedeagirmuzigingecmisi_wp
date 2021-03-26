@@ -18,10 +18,16 @@
 
 .ui.menu { border-radius: 0; }
 .ui.card { width: 100%; min-height: 100%; }
+.ui.card.attachment, .mainImage { cursor: pointer; }
 .ui.label { vertical-align: middle !important;}
 i.chevron.down.icon { padding-left: 5px; padding-top: 1px;}
 #rw_1_input { vertical-align: middle; }
 .rw-widget-picker .rw-select { display: none; }
+
+.modal { width: auto !important; }
+.modal .ui.image img { max-width: 100vh; }
+.modal .description { width: 440px !important; flex: 0 0 auto !important; }
+.modal .description .attachment { display: none; }
 
 .gallery { display: none;}
 
