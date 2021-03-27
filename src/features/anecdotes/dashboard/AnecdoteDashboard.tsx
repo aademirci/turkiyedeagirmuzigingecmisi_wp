@@ -22,13 +22,13 @@ const AnecdoteDashboard: React.FC = () => {
         if ((yearly === false)) {
             loadAnecdotes(page).then(result => {
                 if (page <= result) 
-                    setArray([...array, ...anecdoteArray])
+                    setArray(a => [...a, ...anecdoteArray])
                 setLoaded(true)
             })
         } else if (yearly === true) {
             loadAnecdotesByYear(page, year).then(result => {
                 if (page <= result?.maxPages) 
-                    setArray([...array, ...result?.anecdoteArray!])
+                    setArray(a => [...a, ...result?.anecdoteArray!])
                 setLoaded(true)
             })
         }
@@ -62,7 +62,7 @@ const AnecdoteDashboard: React.FC = () => {
         <Fragment>
             {
                 loaded && <div>
-                <AnecdoteNav callback={callback} setYear={setYear} scrollTo={scrollTo} />
+                <AnecdoteNav callback={callback} setYear={setYear} scrollTo={scrollTo} yearly={yearly} />
                 <ScrollContainer className='main-section scroll-container' onEndScroll={infiniteScroll}>
                     <AnecdoteList array={array} />
                 </ScrollContainer>

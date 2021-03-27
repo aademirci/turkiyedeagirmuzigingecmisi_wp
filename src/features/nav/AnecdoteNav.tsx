@@ -6,18 +6,19 @@ import { RootStoreContext } from '../../app/stores/rootStore'
 interface IProps {
     callback: Function,
     setYear: Function,
-    scrollTo: Function
+    scrollTo: Function,
+    yearly: boolean
 }
 
-const AnecdoteNav: React.FC<IProps> = ({callback, setYear, scrollTo}) => {
+const AnecdoteNav: React.FC<IProps> = ({ callback, setYear, scrollTo, yearly }) => {
     const rootStore = useContext(RootStoreContext)
     const {getYears} = rootStore.anecdoteStore
-    const [text, setText] = useState<string | undefined>("Yillarr")
+    const [text, setText] = useState<string | undefined>("Yıllar")
     const [years, setYears] = useState<IYears[] | undefined>([])
 
     const handleChange = (e:SyntheticEvent<HTMLElement, Event>, data:DropdownProps) => {
         if (data.value?.toString() === '1') {
-            callback(false)
+            if (yearly) callback(false)
             return
         }
         const value = data.value?.toString()
@@ -44,7 +45,7 @@ const AnecdoteNav: React.FC<IProps> = ({callback, setYear, scrollTo}) => {
         <Container className='anecdote-nav' textAlign='center'>
             <Button.Group widths={3}>
                 <Button onClick={() => scrollTo()}><Icon name='chevron left' />En başa dön</Button>
-                <Dropdown button className='icon' floating scrolling options={[{key: 'notSelected', text: 'Seciniz', value: 1}, ...yearOptions]} onChange={handleChange} icon='chevron down' text={text} style={{'textAlign': 'center'}} />
+                <Dropdown button className='icon' floating scrolling options={[{key: 'notSelected', text: 'Tüm yıllar', value: 1}, ...yearOptions]} onChange={handleChange} icon='chevron down' text={text} style={{'textAlign': 'center'}} />
                 <Button toggle>Sıralama: Geçmişten bugüne</Button>
             </Button.Group>
         </Container>
