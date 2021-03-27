@@ -32,6 +32,7 @@ const AnecdoteDashboard: React.FC = () => {
                 setLoaded(true)
             })
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadAnecdotes, loadAnecdotesByYear, page, year, yearly, setLoaded, setArray])
 
     const callback = (b: boolean) => {

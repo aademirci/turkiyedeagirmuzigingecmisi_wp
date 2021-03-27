@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { Button, Card, Modal, Image } from 'semantic-ui-react'
 import parse from 'html-react-parser'
 import { IMedia } from '../../app/models/media'
@@ -16,6 +16,22 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
     const [disabledNext, setDisabledNext] = useState(false)
     const [disabledPrev, setDisabledPrev] = useState(false)
 
+    const handlePrev = useCallback(() => {
+        if (index > 0) {
+            setIndex(index - 1)
+            setDisabledNext(false)
+            if (index === 1) setDisabledPrev(true)
+        }
+    }, [index])
+
+    const handleNext = useCallback(() => {
+        if (index < gallery.length - 1) {
+            setIndex(index + 1)
+            setDisabledPrev(false)
+            if (index === gallery.length - 2) setDisabledNext(true)
+        }
+    }, [index, gallery])
+
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (e.key === 'ArrowLeft') handlePrev()
@@ -27,25 +43,8 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
         return () => {
             window.removeEventListener('keyup', handleKeyPress)
         }
-    }, [open, index])
+    }, [open, index, handlePrev, handleNext])
     
-
-    const handlePrev = () => {
-        if (index > 0) {
-            setIndex(index - 1)
-            setDisabledNext(false)
-            if (index === 1) setDisabledPrev(true)
-        }
-    }
-
-    const handleNext = () => {
-        if (index < gallery.length - 1) {
-            setIndex(index + 1)
-            setDisabledPrev(false)
-            if (index === gallery.length - 2) setDisabledNext(true)
-        }
-    }
-
     const handleClose = () => {
         setIndex(gallery.indexOf(attachedMedia))
         setDisabledPrev(false)
