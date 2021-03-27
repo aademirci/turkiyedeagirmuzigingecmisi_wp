@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Button, Card, Modal, Image } from 'semantic-ui-react'
 import parse from 'html-react-parser'
 import { IMedia } from '../../app/models/media'
@@ -15,6 +15,19 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
     const [index, setIndex] = useState(gallery.indexOf(attachedMedia))
     const [disabledNext, setDisabledNext] = useState(false)
     const [disabledPrev, setDisabledPrev] = useState(false)
+
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') handlePrev()
+            if (e.key === 'ArrowRight') handleNext()
+        } 
+
+        if (open) window.addEventListener('keyup', handleKeyPress)
+
+        return () => {
+            window.removeEventListener('keyup', handleKeyPress)
+        }
+    }, [open, index])
     
 
     const handlePrev = () => {
@@ -22,7 +35,7 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
             setIndex(index - 1)
             setDisabledNext(false)
             if (index === 1) setDisabledPrev(true)
-        } 
+        }
     }
 
     const handleNext = () => {
