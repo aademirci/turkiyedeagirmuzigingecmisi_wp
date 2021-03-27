@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom'
 import { Card, Label, Icon } from 'semantic-ui-react'
 import { IAnecdote } from '../../../app/models/anecdote'
 import parse from "html-react-parser"
-import FeaturedImage from '../FeaturedImage'
 import { RootStoreContext } from '../../../app/stores/rootStore'
 import { observer } from 'mobx-react-lite'
-import ThumbImages from '../ThumbImages'
+import Attachment from '../Attachment'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
 
 const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
@@ -28,7 +27,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                     <div className="mainImage">
                         {loaded && anecdote.featured_media ? attachedMedia.map(mid => {
                             if (mid.id === anecdote.featured_media){
-                                return <FeaturedImage key={mid.id} image={mid} gallery={attachedMedia} />
+                                return <Attachment key={mid.id} attachedMedia={mid} gallery={attachedMedia} featured={true} />
                             } else {
                                 return <Fragment key={mid.id}></Fragment>
                             }
@@ -66,7 +65,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                             {loaded && attachedMedia.map(mid => {
                                 if (mid.id !== anecdote.featured_media)
                                     return (
-                                        <ThumbImages key={mid.id} attachedMedia={mid} gallery={attachedMedia} />
+                                        <Attachment key={mid.id} attachedMedia={mid} gallery={attachedMedia} featured={false} />
                                     )
                                 else
                                     return (<Fragment key={mid.id} />)
