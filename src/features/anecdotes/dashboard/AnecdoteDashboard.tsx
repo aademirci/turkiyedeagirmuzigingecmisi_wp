@@ -9,36 +9,26 @@ import AnecdoteList from './AnecdoteList'
 
 const AnecdoteDashboard: React.FC = () => {
     const rootStore = useContext(RootStoreContext)
-    const {loadAnecdotes, loadAnecdotesByYear, loadingInitial, anecdoteArray} = rootStore.anecdoteStore
+    const {loadAnecdotes, loadingInitial, anecdoteArray} = rootStore.anecdoteStore
     const [loaded, setLoaded] = useState(false)
     const [page, setPage] = useState(1)
     const [year, setYear] = useState(0)
-    const [yearly, setYearly] = useState(false)
+    const [order, setOrder] = useState('desc')
     const [array, setArray] = useState<IAnecdote[]>([])
     const [position, setPosition] = useState(0)
 
     useEffect(() => {
         document.title = 'Anekdotlar'
-        if ((yearly === false)) {
-            loadAnecdotes(page).then(result => {
-                if (page <= result) 
-                    setArray(a => [...a, ...anecdoteArray])
-                setLoaded(true)
-            })
-        } else if (yearly === true) {
-            loadAnecdotesByYear(page, year).then(result => {
-                if (page <= result?.maxPages) 
-                    setArray(a => [...a, ...result?.anecdoteArray!])
-                setLoaded(true)
-            })
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loadAnecdotes, loadAnecdotesByYear, page, year, yearly, setLoaded, setArray])
+        loadAnecdotes(page, year, order).then(result => {
+            if (page <= result?.maxPages)
+                setArray(a => [...a, ...result?.anecdoteArray!])
+            setLoaded(true)
+        })
+    }, [loadAnecdotes, page, year, order, setLoaded, setArray])
 
-    const callback = (b: boolean) => {
+    const callback = () => {
         setLoaded(false)
         setArray([])
-        setYearly(b)
         setPage(1)
     }
 
@@ -63,7 +53,7 @@ const AnecdoteDashboard: React.FC = () => {
         <Fragment>
             {
                 loaded && <div>
-                <AnecdoteNav callback={callback} setYear={setYear} scrollTo={scrollTo} yearly={yearly} />
+                <AnecdoteNav callback={callback} setYear={setYear} scrollTo={scrollTo} year={year} order={order} setOrder={setOrder} />
                 <ScrollContainer className='main-section scroll-container' onEndScroll={infiniteScroll}>
                     <AnecdoteList array={array} />
                 </ScrollContainer>

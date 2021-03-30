@@ -30,40 +30,14 @@ export default class AnecdoteStore {
         }
     }
 
-    @action loadAnecdotes = async (page: number) => {
+    @action loadAnecdotes = async (page: number, year: number, order: string) => {
         this.loadingInitial = true
         try {
-            const anecdotesHeaders = await agent.AnecdotesHeaders.list()
+            const anecdotesHeaders = year === 0 ? await agent.AnecdotesHeaders.list() : await agent.AnecdotesHeaders.listByYear(year)
             const maxPages = anecdotesHeaders['x-wp-totalpages']
             
             if (page <= maxPages) {
-                const anecdotes = await agent.Anecdotes.list(page)
-                runInAction(() => {
-                    anecdotes.forEach((anecdote, i) => {
-                        this.anecdoteArray[i] = anecdote
-                    })
-                    this.loadingInitial = false
-                })
-            } else {
-                runInAction(() => {
-                    this.loadingInitial = false
-                })
-            }
-            return maxPages
-        } catch (error) {
-            console.log(error)
-            this.loadingInitial = false
-        }
-    }
-
-    @action loadAnecdotesByYear = async (page:number, year: number) => {
-        this.loadingInitial = true
-        try {
-            const anecdotesHeaders = await agent.AnecdotesHeaders.listByYear(year)
-            const maxPages = anecdotesHeaders['x-wp-totalpages']
-
-            if (page <= maxPages) {
-                const anecdotes = await agent.Anecdotes.listByYear(page, year)
+                const anecdotes = year === 0 ? await agent.Anecdotes.list(page, order) : await agent.Anecdotes.listByYear(page, year, order)
                 runInAction(() => {
                     this.anecdoteArray = []
                     anecdotes.forEach((anecdote, i) => {

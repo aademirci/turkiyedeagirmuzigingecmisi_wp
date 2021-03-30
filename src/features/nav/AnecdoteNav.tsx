@@ -7,10 +7,12 @@ interface IProps {
     callback: Function,
     setYear: Function,
     scrollTo: Function,
-    yearly: boolean
+    year: number,
+    order: string,
+    setOrder: Function
 }
 
-const AnecdoteNav: React.FC<IProps> = ({ callback, setYear, scrollTo, yearly }) => {
+const AnecdoteNav: React.FC<IProps> = ({ callback, setYear, scrollTo, year, order, setOrder }) => {
     const rootStore = useContext(RootStoreContext)
     const {getYears} = rootStore.anecdoteStore
     const [text, setText] = useState<string | undefined>("Yıllar")
@@ -18,15 +20,26 @@ const AnecdoteNav: React.FC<IProps> = ({ callback, setYear, scrollTo, yearly }) 
 
     const handleChange = (e:SyntheticEvent<HTMLElement, Event>, data:DropdownProps) => {
         if (data.value?.toString() === '1') {
-            if (yearly) callback(false)
+            if (year !== 0) {
+                setYear(0)
+                callback()
+            }
             return
         }
         const value = data.value?.toString()
-        const year = parseInt(value!)
+        const selectedYear = parseInt(value!)
         const text = data.key
         setText(text)
-        callback(true)
-        setYear(year)
+        callback()
+        setYear(selectedYear)
+    }
+
+    const handleToggle = () => {
+        if (order === 'asc')
+            setOrder('desc')
+        else
+            setOrder('asc')
+        callback()
     }
 
     let yearOptions: {key: string, text: string, value: string}[] = []
@@ -46,7 +59,7 @@ const AnecdoteNav: React.FC<IProps> = ({ callback, setYear, scrollTo, yearly }) 
             <Button.Group widths={3}>
                 <Button onClick={() => scrollTo()}><Icon name='chevron left' />En başa dön</Button>
                 <Dropdown button className='icon' floating scrolling options={[{key: 'notSelected', text: 'Tüm yıllar', value: 1}, ...yearOptions]} onChange={handleChange} icon='chevron down' text={text} style={{'textAlign': 'center'}} />
-                <Button toggle>Sıralama: Geçmişten bugüne</Button>
+                <Button toggle onClick={handleToggle}>Sıralama: {order === 'asc' ? 'Geçmişten bugüne' : 'Bugünden geçmişe'}</Button>
             </Button.Group>
         </Container>
     )
