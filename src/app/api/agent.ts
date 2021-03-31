@@ -1,6 +1,7 @@
-import axios, { AxiosResponse } from "axios";
-import { IAnecdote, IYears } from "../models/anecdote";
-import { IMedia } from "../models/media";
+import axios, { AxiosResponse } from 'axios'
+import { IAnecdote, IYears } from '../models/anecdote'
+import { IComment } from '../models/comment'
+import { IMedia } from '../models/media'
 
 axios.defaults.baseURL = "https://tamg.aademirci.com/wp-json/wp/v2/"
 
@@ -25,5 +26,9 @@ const AnecdotesHeaders = {
     listByYear: (year: number) => requests.getHeaders(`/olay?&before=${year}-12-31T23:59:59&after=${year}-01-01T00:00:00&order=asc`)
 }
 
+const Comments = {
+    list: (id: number): Promise<IComment[]> => requests.get(`/comments?post=${id}`)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { Anecdotes, AnecdotesHeaders }
+export default { Anecdotes, AnecdotesHeaders, Comments }

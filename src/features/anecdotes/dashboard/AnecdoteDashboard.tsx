@@ -47,7 +47,7 @@ const AnecdoteDashboard: React.FC = () => {
         document.getElementsByClassName('main-section')[0].scrollTo({left: 0, behavior: 'smooth'});
     }
     
-    if (loadingInitial) return <LoadingComponent content='Anekdotlar yükleniyor...' />
+    if (loadingInitial || !array.length) return <LoadingComponent content='Anekdotlar yükleniyor...' />
 
     return (
         <Fragment>

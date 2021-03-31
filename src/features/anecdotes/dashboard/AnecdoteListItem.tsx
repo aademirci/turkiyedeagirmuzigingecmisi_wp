@@ -8,24 +8,22 @@ import parse from "html-react-parser"
 import { RootStoreContext } from '../../../app/stores/rootStore'
 import { observer } from 'mobx-react-lite'
 import Attachment from '../Attachment'
-import LoadingComponent from '../../../app/layout/LoadingComponent'
 
 const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
     const rootStore = useContext(RootStoreContext)
-    const {getAttached, attachedMedia, loadingInitial} = rootStore.anecdoteStore
+    const { getAttached, attachedMedia } = rootStore.anecdoteStore
     const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
         getAttached(anecdote.id).then(() => setLoaded(true))
     }, [getAttached, anecdote.id])
 
-    if (loadingInitial) return <LoadingComponent content='Anekdotlar yükleniyor...' />
     return (
-        
         <div className="anecdote" id={anecdote.slug}>
+            {loaded && 
             <Card>
                     <div className="mainImage">
-                        {loaded && anecdote.featured_media ? attachedMedia.map(mid => {
+                        {anecdote.featured_media ? attachedMedia.map(mid => {
                             if (mid.id === anecdote.featured_media){
                                 return <Attachment key={mid.id} attachedMedia={mid} gallery={attachedMedia} featured={true} />
                             } else {
@@ -45,7 +43,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                                 })}
                             </Label>
                             
-                            <Label color='black'>{format(new Date(anecdote.date), 'd MMMM yyyy', {locale: tr})}</Label>
+                            <Label color='black'>{loaded && format(new Date(anecdote.date), 'd MMMM yyyy', {locale: tr})}</Label>
                         </Label.Group>
                     </div>
                     
@@ -62,7 +60,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                             {parse(anecdote.content.rendered)}
                         </Card.Description>
                         <Card.Group itemsPerRow={3}>
-                            {loaded && attachedMedia.map(mid => {
+                            {attachedMedia.map(mid => {
                                 if (mid.id !== anecdote.featured_media)
                                     return (
                                         <Attachment key={mid.id} attachedMedia={mid} gallery={attachedMedia} featured={false} />
@@ -84,7 +82,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                             <Label key={person.term_id} color="grey" className="personLabel">{person.name}</Label>
                         ))}
                     </Card.Content>
-            </Card>
+            </Card>}
 
             
         </div>

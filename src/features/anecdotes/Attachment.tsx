@@ -71,9 +71,11 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
                 </Modal.Header>
                 <Modal.Content image scrolling>
                     <Image src={gallery[index].media_details.sizes.full.source_url} wrapped fluid />
-                    <Modal.Description>
-                        {parse(gallery[index].description.rendered)}
-                    </Modal.Description>
+                    {gallery[index].description.rendered.includes('<p>') &&
+                        <Modal.Description>
+                            {parse(gallery[index].description.rendered)}
+                        </Modal.Description>
+                    }
                 </Modal.Content>
                 <Modal.Actions>
                     <Button disabled={disabledPrev} onClick={handlePrev}>Önceki</Button>

@@ -12,7 +12,7 @@ export default class AnecdoteStore {
     }
 
     @observable anecdoteArray: IAnecdote[] = []
-    @observable anecdote: IAnecdote | null = null
+    @observable anecdote: IAnecdote | undefined = undefined
     @observable attachedMedia: IMedia[] = []
     @observable loadingInitial = false
 
