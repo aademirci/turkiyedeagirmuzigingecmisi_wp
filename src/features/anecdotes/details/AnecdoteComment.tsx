@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Comment } from 'semantic-ui-react'
+import { Card, Comment, Header } from 'semantic-ui-react'
 import parse from 'html-react-parser'
 import { format } from 'date-fns'
 import { tr } from 'date-fns/locale'
@@ -25,7 +25,8 @@ const AnecdoteComment: React.FC<IProps> = ({ anecdoteId }) => {
         <div className="anecdote" id="comments">
             <Card>
                 <Comment.Group>
-                {loading && commentArray.length && commentArray.map(comment => (
+                    <Header as="h2">Yorumlar</Header>
+                    {loading && commentArray.length && commentArray.map(comment => (
                     <Comment key={comment.id}>
                         <Comment.Avatar src={comment.author_avatar_urls[96]} />
                         <Comment.Content>

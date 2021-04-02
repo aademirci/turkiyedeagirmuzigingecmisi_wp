@@ -12,7 +12,7 @@
 
 .flexcontainer { display: flex; flex-direction: column; height: 100%; margin: 0; }
 
-.ui.card>.content { border-top: none; }
+.ui.card>.content { border-top: none; padding: 20px; }
 .ui.card>.extra.content { background: #363430; margin-top: auto; color: white; padding-bottom: 1em; }
 .bandLabel, .personLabel { margin-top: 2px !important; hyphens: none; }
 
@@ -28,6 +28,8 @@ i.chevron.down.icon { padding-left: 5px; padding-top: 1px;}
 .modal .ui.image img { max-width: 100vh; }
 .modal .description { width: 440px !important; flex: 0 0 auto !important; }
 .modal .description .attachment { display: none; }
+
+.ui.comments { padding: 20px; }
 
 .gallery { display: none;}
 

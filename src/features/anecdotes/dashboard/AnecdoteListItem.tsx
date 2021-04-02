@@ -48,7 +48,11 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                     </div>
                     
                     <Card.Content>
-                        <Card.Header as={Link} to={`/olay/${anecdote.slug}`}>{parse(anecdote.title.rendered)}</Card.Header>
+                        <Card.Header as="h2" className="ui">
+                            <Link to={`/olay/${anecdote.slug}`}>
+                                {parse(anecdote.title.rendered)}
+                            </Link>
+                        </Card.Header>
                         <Card.Meta>
                             <span className='date'>{anecdote.olaydaki_ortamlar && <Icon name='map marker alternate' />}
                                 {anecdote.olaydaki_ortamlar && 
