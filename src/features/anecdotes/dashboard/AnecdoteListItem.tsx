@@ -9,22 +9,22 @@ import { RootStoreContext } from '../../../app/stores/rootStore'
 import { observer } from 'mobx-react-lite'
 import Attachment from '../Attachment'
 
-const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
+const AnecdoteListItem: React.FC<{anecdote: IAnecdote | undefined}> = ({anecdote}) => {
     const rootStore = useContext(RootStoreContext)
     const { getAttached, attachedMedia } = rootStore.anecdoteStore
     const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        getAttached(anecdote.id).then(() => setLoaded(true))
-    }, [getAttached, anecdote.id])
+        getAttached(anecdote!.id).then(() => setLoaded(true))
+    }, [getAttached, anecdote])
 
     return (
-        <div className="anecdote" id={anecdote.slug}>
+        <div className="anecdote" id={anecdote!.slug}>
             {loaded && 
             <Card>
                     <div className="mainImage">
-                        {anecdote.featured_media ? attachedMedia.map(mid => {
-                            if (mid.id === anecdote.featured_media){
+                        {anecdote!.featured_media ? attachedMedia.map(mid => {
+                            if (mid.id === anecdote!.featured_media){
                                 return <Attachment key={mid.id} attachedMedia={mid} gallery={attachedMedia} featured={true} />
                             } else {
                                 return <Fragment key={mid.id}></Fragment>
@@ -33,7 +33,7 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                         <Label.Group>
                             
                             <Label color='black'>
-                                {anecdote['olaydaki_olay-tipleri'].map((type, index) => {
+                                {anecdote!['olaydaki_olay-tipleri'].map((type, index) => {
                                     return (
                                         <Fragment key={type.term_id}>
                                             {(index ? ', ' : '')}
@@ -43,29 +43,29 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                                 })}
                             </Label>
                             
-                            <Label color='black'>{loaded && format(new Date(anecdote.date), 'd MMMM yyyy', {locale: tr})}</Label>
+                            <Label color='black'>{loaded && format(new Date(anecdote!.date), 'd MMMM yyyy', {locale: tr})}</Label>
                         </Label.Group>
                     </div>
                     
                     <Card.Content>
                         <Card.Header as="h2" className="ui">
-                            <Link to={`/olay/${anecdote.slug}`}>
-                                {parse(anecdote.title.rendered)}
+                            <Link to={`/olay/${anecdote!.slug}`}>
+                                {parse(anecdote!.title.rendered)}
                             </Link>
                         </Card.Header>
                         <Card.Meta>
-                            <span className='date'>{anecdote.olaydaki_ortamlar && <Icon name='map marker alternate' />}
-                                {anecdote.olaydaki_ortamlar && 
-                                anecdote.olaydaki_ortamlar[0].name}
-                                {anecdote.olaydaki_sehirler && `, ${anecdote.olaydaki_sehirler[0].name}`}
+                            <span className='date'>{anecdote!.olaydaki_ortamlar && <Icon name='map marker alternate' />}
+                                {anecdote!.olaydaki_ortamlar && 
+                                anecdote!.olaydaki_ortamlar[0].name}
+                                {anecdote!.olaydaki_sehirler && `, ${anecdote!.olaydaki_sehirler[0].name}`}
                             </span>
                         </Card.Meta>
                         <Card.Description>
-                            {parse(anecdote.content.rendered)}
+                            {parse(anecdote!.content.rendered)}
                         </Card.Description>
                         <Card.Group itemsPerRow={3}>
                             {attachedMedia.map(mid => {
-                                if (mid.id !== anecdote.featured_media)
+                                if (mid.id !== anecdote!.featured_media)
                                     return (
                                         <Attachment key={mid.id} attachedMedia={mid} gallery={attachedMedia} featured={false} />
                                     )
@@ -79,10 +79,10 @@ const AnecdoteListItem: React.FC<{anecdote: IAnecdote}> = ({anecdote}) => {
                     <Card.Content extra>
                         Oradaydilar:
                         <br />
-                        {anecdote.olaydaki_gruplar && anecdote.olaydaki_gruplar.map(band => (
+                        {anecdote!.olaydaki_gruplar && anecdote!.olaydaki_gruplar.map(band => (
                             <Label key={band.term_id} color="orange" className="bandLabel">{band.name}</Label>
                         ))}
-                        {anecdote.olaydaki_kisiler && anecdote.olaydaki_kisiler.map(person => (
+                        {anecdote!.olaydaki_kisiler && anecdote!.olaydaki_kisiler.map(person => (
                             <Label key={person.term_id} color="grey" className="personLabel">{person.name}</Label>
                         ))}
                     </Card.Content>

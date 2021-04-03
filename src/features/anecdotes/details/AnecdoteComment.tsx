@@ -7,7 +7,7 @@ import LoadingComponent from '../../../app/layout/LoadingComponent'
 import { RootStoreContext } from '../../../app/stores/rootStore'
 
 interface IProps {
-    anecdoteId: number
+    anecdoteId: number | undefined
 }
 
 const AnecdoteComment: React.FC<IProps> = ({ anecdoteId }) => {
@@ -16,7 +16,7 @@ const AnecdoteComment: React.FC<IProps> = ({ anecdoteId }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        loadComments(anecdoteId).then(() => setLoading(true))
+        loadComments(anecdoteId!).then(() => setLoading(true))
     }, [loadComments, anecdoteId])
 
     if (loadingInitial) return <LoadingComponent content="Yorumlar yükleniyor..." />
@@ -26,7 +26,7 @@ const AnecdoteComment: React.FC<IProps> = ({ anecdoteId }) => {
             <Card>
                 <Comment.Group>
                     <Header as="h2">Yorumlar</Header>
-                    {loading && commentArray.length && commentArray.map(comment => (
+                    {loading && commentArray.length ? commentArray.map(comment => (
                     <Comment key={comment.id}>
                         <Comment.Avatar src={comment.author_avatar_urls[96]} />
                         <Comment.Content>
@@ -36,7 +36,10 @@ const AnecdoteComment: React.FC<IProps> = ({ anecdoteId }) => {
                             </Comment.Metadata>
                             <Comment.Text>{parse(comment.content.rendered)}</Comment.Text>
                         </Comment.Content>
-                    </Comment>))}
+                    </Comment>))
+                    :
+                    <div>Yorum yok</div>
+                    }
                 </Comment.Group>
             </Card>
         </div>

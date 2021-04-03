@@ -12,6 +12,7 @@ export default class AnecdoteStore {
     }
 
     @observable anecdoteArray: IAnecdote[] = []
+    @observable nextFive: IAnecdote[] = []
     @observable anecdote: IAnecdote | undefined = undefined
     @observable attachedMedia: IMedia[] = []
     @observable loadingInitial = false
@@ -21,10 +22,25 @@ export default class AnecdoteStore {
         try {
             const anecdote = await agent.Anecdotes.selected(slug)
             runInAction(() => {
-                this.anecdote = anecdote
+                this.anecdote = anecdote[0]
                 this.loadingInitial = false
             })
-            return anecdote
+            return this.anecdote
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    @action loadNextAnecdotes = async (slugs: string[]) => {
+        this.loadingInitial = true
+        try {
+            this.nextFive = []
+            for (const slug of slugs) {
+                const anecdote = await agent.Anecdotes.selected(slug)
+                
+                this.nextFive = [...this.nextFive, anecdote[0]]
+            }
+            this.loadingInitial = false
         } catch (error) {
             console.log(error)
         }

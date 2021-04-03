@@ -7,6 +7,7 @@ export interface IAnecdote {
     title: ITitle
     content: IContent
     featured_media: number
+    next_five: string[]
     'olaydaki_olay-tipleri': IType[]
     olaydaki_gruplar: IBand[]
     olaydaki_kisiler: IPerson[]
