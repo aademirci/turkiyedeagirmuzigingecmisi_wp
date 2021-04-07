@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { Button, Card, Modal, Image } from 'semantic-ui-react'
 import parse from 'html-react-parser'
 import { IMedia } from '../../app/models/media'
+import LoadingComponent from '../../app/layout/LoadingComponent'
 
 interface IProps {
     attachedMedia: IMedia, 
@@ -15,6 +16,7 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
     const [index, setIndex] = useState(gallery.indexOf(attachedMedia))
     const [disabledNext, setDisabledNext] = useState(false)
     const [disabledPrev, setDisabledPrev] = useState(false)
+    const [imageLoaded, setImageLoaded] = useState(false)
 
     const handlePrev = useCallback(() => {
         if (index > 0) {
@@ -64,8 +66,10 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
             :
                 <Card className="attachment"><Image src={thumbnail.source_url} onClick={() => setOpen(true)} /></Card>
             }
-            
-            <Modal open={open} centered={false} onClose={handleClose} onMount={handleMount}>
+            {open && <Image src={gallery[index].media_details.sizes.full.source_url} wrapped fluid onLoad={() => setImageLoaded(true)} style={{ display: 'none' }} />}
+            {open && !imageLoaded ? <LoadingComponent content="Resim yükleniyor" />
+            :
+            <Modal open={open} centered={false} onClose={handleClose} onMount={handleMount} style={{display: 'none'}}>
                 <Modal.Header>
                     {parse(gallery[index].title.rendered)}
                 </Modal.Header>
@@ -81,7 +85,7 @@ const Attachment: React.FC<IProps> = ({ attachedMedia, gallery, featured }) => {
                     <Button disabled={disabledPrev} onClick={handlePrev}>Önceki</Button>
                     <Button disabled={disabledNext} onClick={handleNext}>Sonraki</Button>
                 </Modal.Actions>
-            </Modal>
+            </Modal>}
         </Fragment>
     )
 }
