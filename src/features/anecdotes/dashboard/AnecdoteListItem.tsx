@@ -9,7 +9,7 @@ import { RootStoreContext } from '../../../app/stores/rootStore'
 import { observer } from 'mobx-react-lite'
 import Attachment from '../Attachment'
 
-const AnecdoteListItem: React.FC<{anecdote: IAnecdote | undefined}> = ({anecdote}) => {
+const AnecdoteListItem: React.FC<{anecdote: IAnecdote | undefined}> = ({ anecdote }) => {
     const rootStore = useContext(RootStoreContext)
     const { getAttached, attachedMedia } = rootStore.anecdoteStore
     const [loaded, setLoaded] = useState(false)

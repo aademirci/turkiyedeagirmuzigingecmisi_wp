@@ -13,7 +13,7 @@ interface DetailParams {
     slug: string
 }
 
-const AnecdoteDetails: React.FC<RouteComponentProps<DetailParams>> = ({match}) => {
+const AnecdoteDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match }) => {
     const rootStore = useContext(RootStoreContext)
     const { loadAnecdote, loadNextAnecdotes, anecdote, nextFive, loadingInitial } = rootStore.anecdoteStore
     const [loading, setLoading] = useState(false)

@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import { IAnecdote } from '../../../app/models/anecdote'
 import AnecdoteListItem from './AnecdoteListItem'
 
-const AnecdoteList: React.FC<{array: IAnecdote[]}> = ({array}) => {
+const AnecdoteList: React.FC<{array: IAnecdote[]}> = ({ array }) => {
 
 
     return (
