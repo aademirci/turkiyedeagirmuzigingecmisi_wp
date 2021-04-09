@@ -1,4 +1,4 @@
-import { IBand, ICity, IMedium, IPerson, IType } from "./taxonomy";
+import { IBand, ICity, IMedium, IPerson, IType } from "./taxonomy"
 
 export interface IAnecdote {
     id: number

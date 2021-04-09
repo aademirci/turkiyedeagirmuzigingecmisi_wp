@@ -1,8 +1,8 @@
-import { action, observable, runInAction } from "mobx";
-import agent from "../api/agent";
-import { IAnecdote } from "../models/anecdote";
-import { IMedia } from "../models/media";
-import { RootStore } from "./rootStore";
+import { action, observable, runInAction } from "mobx"
+import agent from "../api/agent"
+import { IAnecdote } from "../models/anecdote"
+import { IMedia } from "../models/media"
+import { RootStore } from "./rootStore"
 
 export default class AnecdoteStore {
     rootStore: RootStore

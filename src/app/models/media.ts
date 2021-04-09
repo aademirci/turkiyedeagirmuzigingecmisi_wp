@@ -1,4 +1,4 @@
-import { ITitle } from "./anecdote";
+import { ITitle } from "./anecdote"
 
 export interface IMedia {
     id: number

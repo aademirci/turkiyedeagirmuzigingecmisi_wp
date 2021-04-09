@@ -1,8 +1,8 @@
 import { configure } from "mobx";
-import { createContext } from "react";
-import AnecdoteStore from "./anecdoteStore";
-import CommentStore from "./commentStore";
-import CommonStore from "./commonStore";
+import { createContext } from "react"
+import AnecdoteStore from "./anecdoteStore"
+import CommentStore from "./commentStore"
+import CommonStore from "./commonStore"
 
 configure({ enforceActions: 'always' })
 

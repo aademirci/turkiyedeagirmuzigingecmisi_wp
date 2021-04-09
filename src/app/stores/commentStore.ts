@@ -1,7 +1,7 @@
 import { action, observable, runInAction } from "mobx";
-import agent from "../api/agent";
-import { IComment } from "../models/comment";
-import { RootStore } from "./rootStore";
+import agent from "../api/agent"
+import { IComment } from "../models/comment"
+import { RootStore } from "./rootStore"
 
 export default class CommentStore {
     rootStore: RootStore

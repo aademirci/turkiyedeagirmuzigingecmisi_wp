@@ -1,5 +1,5 @@
-import { createMedia } from '@artsy/fresnel';
-import { observer } from 'mobx-react-lite';
+import { createMedia } from '@artsy/fresnel'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Button, Container, Header, Menu } from 'semantic-ui-react'

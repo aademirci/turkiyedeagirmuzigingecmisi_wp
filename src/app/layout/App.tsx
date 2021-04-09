@@ -1,10 +1,10 @@
-import { observer } from 'mobx-react-lite';
-import React, { Fragment } from 'react';
+import { observer } from 'mobx-react-lite'
+import React, { Fragment } from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
-import AnecdoteDashboard from '../../features/anecdotes/dashboard/AnecdoteDashboard';
-import AnecdoteDetails from '../../features/anecdotes/details/AnecdoteDetails';
-import Homepage from '../../features/home/Homepage';
-import NavBar from '../../features/nav/NavBar';
+import AnecdoteDashboard from '../../features/anecdotes/dashboard/AnecdoteDashboard'
+import AnecdoteDetails from '../../features/anecdotes/details/AnecdoteDetails'
+import Homepage from '../../features/home/Homepage'
+import NavBar from '../../features/nav/NavBar'
 
 const App = () => {
 
@@ -24,4 +24,4 @@ const App = () => {
   );
 }
 
-export default withRouter(observer(App));
+export default withRouter(observer(App))
