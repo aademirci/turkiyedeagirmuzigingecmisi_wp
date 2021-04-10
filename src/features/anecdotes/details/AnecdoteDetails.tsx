@@ -30,7 +30,7 @@ const AnecdoteDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match })
     return (
         <Fragment>
             {loading &&
-                <ScrollContainer className='main-section scroll-container'>
+                <ScrollContainer className='main-section scroll-container single'>
                     <AnecdoteListItem anecdote={anecdote} />
                     <AnecdoteComment anecdoteId={anecdote?.id} />
                     <div className="anecdote" id="sonraki">

@@ -5,6 +5,7 @@
 
 
 .anecdote { width: 100%; height: calc(100vh - 167px); overflow-y: auto; display: inline-block !important; vertical-align: top; margin: 0 0 0 20px !important; white-space: normal; position: relative; border-radius: .28571429rem; box-shadow: 0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5;}
+.single .anecdote { height: calc(100vh - 131px); }
 .anecdote .labels { position: absolute; top: 20px; left: 20px; z-index: 9;}
 .anecdote .labelPush { height: 90px; background-color: #eeeeee; }
 .anecdote .labels .label { display: block; margin-bottom: 0 !important; border-radius: 0 !important; width: fit-content; text-transform: uppercase;}
