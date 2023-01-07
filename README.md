@@ -1,46 +1,17 @@
-# Getting Started with Create React App
+# About *Türkiye'de Ağır Müziğin Geçmişi*
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Türkiye'de Ağır Müziğin Geçmişi (History of Heavy Music in Turkey) is my music archive project that is in the form of a book and a website, having Twitter, Instagram, YouTube and podcast activity as well. It documents the history of heavy metal music in Turkey from 1981 with photos, videos, newspaper/magazine articles, concert posters/tickets.
 
-## Available Scripts
+## About the website
 
-In the project directory, you can run:
+[https://turkiyedeagirmuzigingecmisi.com](https://turkiyedeagirmuzigingecmisi.com) is a Turkish website based on WordPress. Each post is an event with a certain date from the history. These events are laid out horizontally so that they form a horizontal timeline. So, the main navigation is based on swiping or dragging the screen to the left or right. Taxonomies are the type of the event, the location and the city, the bands and the people. Each event has a description and a gallery of relevant visual material. Visual materials can have title and description as well.
 
-### `npm start`
+## About this repository
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+turkiyedeagirmuzigingecmisi_wp is a project that helps me apply what I have learned in React. It actually mimics the user interface of the original website as a React-based alternative. I used Axios to access the REST API of the WordPress website at [https://turkiyedeagirmuzigingecmisi.com/olay](https://turkiyedeagirmuzigingecmisi.com/olay) and used MobX to manage the states. I wrote the code in TypeScript. There is also routing. If you click on the title of an event, you go to the event's page listing the comments for that event and the URL includes the original slug in the WordPress version of the website. In the original website, I could not implement navigating an event's visual materials with a "next" or "previous" button. But I managed to do that in React, in addition to the ability to use left-right keys. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+If you ever download and run the project, open [http://localhost:3000/olay](http://localhost:3000/olay) to skip the intro page (which is currently empty) and view the project in the browser.
 
-### `npm test`
+## English version?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+As the project is completely in Turkish, it might not be useful for you to try. I can implement a Turkish/English switchable user interface in the future, however, the data source will still be in Turkish. I sometimes check the potential of the internationalisation of the project by creating subtitles in the [YouTube channel](https://youtu.be/BEg-LPCyzCM), or writing separate articles on [Medium](https://medium.com/@aademirci/history-of-heavy-music-in-turkey-live-at-moda-theatre-215a0ddb401b). But the numbers say it is not the time for a complete translation to English yet.
