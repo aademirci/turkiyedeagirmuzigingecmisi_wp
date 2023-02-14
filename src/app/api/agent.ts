@@ -3,7 +3,7 @@ import { IAnecdote, IYears } from '../models/anecdote'
 import { IComment } from '../models/comment'
 import { IMedia } from '../models/media'
 
-axios.defaults.baseURL = "https://tamg.aademirci.com/wp-json/wp/v2/"
+axios.defaults.baseURL = "https://turkiyedeagirmuzigingecmisi.com/wp-json/wp/v2/"
 
 const responseBody = (response: AxiosResponse) => response.data
 const responseHeader = (response: AxiosResponse) => response.headers
